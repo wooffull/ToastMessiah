@@ -1,24 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterMove : MonoBehaviour {
-    public float baseSpeed;
+public class Player : MonoBehaviour {
+    public float baseSpeed = 1;
 
     private Transform playerTransform;
     private Lane currentLane;
 
-    private enum Lane {
-        FAR,
-        MID,
-        CLOSE
-    };
-
-	// Use this for initialization
-	void Start () {
-        baseSpeed = 1.0f;
+    // Use this for initialization
+    void Start () {
         playerTransform = gameObject.GetComponent<Transform>();
         currentLane = Lane.MID;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,16 +30,21 @@ public class CharacterMove : MonoBehaviour {
         Debug.Log("Lane Up");
         switch (currentLane) {
             case Lane.CLOSE:
-                playerTransform.Translate(0.0f, 0.0f, 2.0f, Space.World);
                 currentLane = Lane.MID;
                 break;
             case Lane.MID:
-                playerTransform.Translate(0.0f, 0.0f, 2.0f, Space.World);
                 currentLane = Lane.FAR;
                 break;
             case Lane.FAR:
                 break;
         }
+
+        transform.position = new Vector3
+        (
+            transform.position.x,
+            currentLane.GetY(),
+            transform.position.z
+        );
     }
 
     void ShiftLaneDown() {
@@ -56,13 +54,31 @@ public class CharacterMove : MonoBehaviour {
             case Lane.CLOSE:
                 break;
             case Lane.MID:
-                playerTransform.Translate(0.0f, 0.0f, -2.0f, Space.World);
                 currentLane = Lane.CLOSE;
                 break;
             case Lane.FAR:
-                playerTransform.Translate(0.0f, 0.0f, -2.0f, Space.World);
                 currentLane = Lane.MID;
                 break;
+        }
+
+        transform.position = new Vector3
+        (
+            transform.position.x,
+            currentLane.GetY(),
+            transform.position.z
+        );
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Butter")
+        {
+            Butter b = other.gameObject.GetComponent<Butter>();
+
+            if (b.lane == currentLane)
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
 }
