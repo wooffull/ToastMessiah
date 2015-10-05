@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
     public float baseSpeed = 1;
+    public ButterMeter butterMeter;
 
     private Transform playerTransform;
     private Lane currentLane;
@@ -15,20 +16,28 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        playerTransform.Translate(baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+        float butterPercentage = butterMeter.percentage;
 
-        // Get input for lane changing
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-            ShiftLaneDown();
-        }
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-            ShiftLaneUp();
+        if (butterPercentage > 0)
+        {
+            playerTransform.Translate(baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+
+            // Get input for lane changing
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                ShiftLaneDown();
+            }
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                ShiftLaneUp();
+            }
         }
 	}
 
     void ShiftLaneUp() {
         Debug.Log("Lane Up");
-        switch (currentLane) {
+        switch (currentLane)
+        {
             case Lane.CLOSE:
                 currentLane = Lane.MID;
                 break;
@@ -77,6 +86,7 @@ public class Player : MonoBehaviour {
 
             if (b.lane == currentLane)
             {
+                butterMeter.AddButter(b);
                 Destroy(other.gameObject);
             }
         }
