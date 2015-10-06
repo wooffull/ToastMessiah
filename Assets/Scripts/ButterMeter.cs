@@ -32,8 +32,8 @@ public class ButterMeter : MonoBehaviour {
         percentage -= lossAmount;
     }
 
-    public void AddButter(Butter butter)
+    public void AddButter(Pickup pickup)
     {
-        percentage += butter.butterAmount;
+        percentage += pickup.butterAmount;
     }
 }

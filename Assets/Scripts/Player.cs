@@ -80,13 +80,14 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Butter")
+        // Obstacles and Butter behave the same way, except Obstacles add negative Butter
+        if (other.tag == "Pickup")
         {
-            Butter b = other.gameObject.GetComponent<Butter>();
+            Pickup p = other.gameObject.GetComponent<Pickup>();
 
-            if (b.lane == currentLane)
+            if (p.lane == currentLane)
             {
-                butterMeter.AddButter(b);
+                butterMeter.AddButter(p);
                 Destroy(other.gameObject);
             }
         }

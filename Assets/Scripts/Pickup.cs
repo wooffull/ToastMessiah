@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Butter : MonoBehaviour {
+public class Pickup : MonoBehaviour {
     public Lane lane;
     public float butterAmount = 0.1f;
 
