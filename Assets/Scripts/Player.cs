@@ -7,31 +7,41 @@ public class Player : MonoBehaviour {
     public ButterMeter butterMeter;
 
     private bool eaten;
+    private Transform playerTransform;
+    private GameObject manager;
+    private StatesManager stateManager;
 
     // Use this for initialization
     void Start () {
         currentLane = Lane.MID;
         eaten = false;
+
+        manager = GameObject.FindGameObjectWithTag("GameController");
+        stateManager = manager.GetComponent<StatesManager>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (!eaten)
-        {
+        if (!eaten){
             float butterPercentage = butterMeter.percentage;
 
-            if (butterPercentage > 0)
+            if (butterPercentage > 0 && (stateManager.GetGameState() == StatesManager.GameplayState.PLAYING))
             {
-                transform.Translate(baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+               // float butterPercentage = butterMeter.percentage;
 
-                // Get input for lane changing
-                if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                if (butterPercentage > 0)
                 {
-                    ShiftLaneDown();
-                }
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    ShiftLaneUp();
+                    transform.Translate(baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+
+                    // Get input for lane changing
+                    if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        ShiftLaneDown();
+                    }
+                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        ShiftLaneUp();
+                    }
                 }
             }
         }
