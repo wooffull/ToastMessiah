@@ -7,18 +7,23 @@ public class Player : MonoBehaviour {
 
     private Transform playerTransform;
     private Lane currentLane;
+    private GameObject manager;
+    private StatesManager stateManager;
 
     // Use this for initialization
     void Start () {
         playerTransform = gameObject.GetComponent<Transform>();
         currentLane = Lane.MID;
+
+        manager = GameObject.FindGameObjectWithTag("GameController");
+        stateManager = manager.GetComponent<StatesManager>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         float butterPercentage = butterMeter.percentage;
 
-        if (butterPercentage > 0)
+        if (butterPercentage > 0 && (stateManager.GetGameState() == StatesManager.GameplayState.PLAYING))
         {
             playerTransform.Translate(baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
 
