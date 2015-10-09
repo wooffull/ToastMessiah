@@ -8,16 +8,13 @@ public class Player : MonoBehaviour {
 
     private bool eaten;
     private Transform playerTransform;
-    private GameObject manager;
-    private StatesManager stateManager;
+    private StateManager stateManager;
 
     // Use this for initialization
     void Start () {
         currentLane = Lane.MID;
         eaten = false;
-
-        manager = GameObject.FindGameObjectWithTag("GameController");
-        stateManager = manager.GetComponent<StatesManager>();
+        stateManager = GameObject.Find("GameController").GetComponent<StateManager>();
     }
 	
 	// Update is called once per frame
@@ -25,7 +22,7 @@ public class Player : MonoBehaviour {
         if (!eaten){
             float butterPercentage = butterMeter.percentage;
 
-            if (butterPercentage > 0 && (stateManager.GetGameState() == StatesManager.GameplayState.PLAYING))
+            if (butterPercentage > 0 && (stateManager.GetGameState() == StateManager.GameplayState.PLAYING))
             {
                // float butterPercentage = butterMeter.percentage;
 
@@ -122,6 +119,7 @@ public class Player : MonoBehaviour {
             {
                 d.Stop();
                 eaten = true;
+                stateManager.SetGameState(StateManager.GameplayState.END);
             }
         }
     }

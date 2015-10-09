@@ -7,14 +7,11 @@ public class ButterMeter : MonoBehaviour {
     public float percentage = 1.0f;
     public float lossAmount = 0.0075f;
 
-    private GameObject manager;
-    private StatesManager stateManager;
+    private StateManager stateManager;
 
 	// Use this for initialization
 	void Start () {
-        // Set up managers
-        manager = GameObject.FindGameObjectWithTag("GameController");
-        stateManager = manager.GetComponent<StatesManager>();
+        stateManager = GameObject.Find("GameController").GetComponent<StateManager>();
     }
 	
 	// Update is called if player isn't eaten
@@ -35,14 +32,14 @@ public class ButterMeter : MonoBehaviour {
             1
         );
         // Only decrease butter if playing
-        if (stateManager.GetGameState() == StatesManager.GameplayState.PLAYING)
+        if (stateManager.GetGameState() == StateManager.GameplayState.PLAYING)
         {
             percentage -= lossAmount;
         }
         // When we run out of butter, go to Game Over state
         if (percentage < 0.001f) // Account for rounding errors and stuff
         {
-            stateManager.SetGameState(StatesManager.GameplayState.END);
+            stateManager.SetGameState(StateManager.GameplayState.END);
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StatesManager : MonoBehaviour {
+public class StateManager : MonoBehaviour {
     public enum GameplayState
     {
         START,
@@ -12,18 +12,11 @@ public class StatesManager : MonoBehaviour {
 
     public GameObject pauseText;
     public GameObject endText;
+    public GameplayState playState = GameplayState.START;
 
-    private GameplayState playState = GameplayState.START;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Start()
+    {
+    }
 
     private void HandleNewState(GameplayState handleState)
     {
