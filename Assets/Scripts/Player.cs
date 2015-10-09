@@ -3,36 +3,47 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
     public float baseSpeed = 1;
+    public Lane currentLane = Lane.MID;
     public ButterMeter butterMeter;
 
-    private Transform playerTransform;
-    private Lane currentLane;
+    private bool eaten;
 
     // Use this for initialization
     void Start () {
-        playerTransform = gameObject.GetComponent<Transform>();
         currentLane = Lane.MID;
+        eaten = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        float butterPercentage = butterMeter.percentage;
-
-        if (butterPercentage > 0)
+        if (!eaten)
         {
-            playerTransform.Translate(baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+            float butterPercentage = butterMeter.percentage;
 
-            // Get input for lane changing
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (butterPercentage > 0)
             {
-                ShiftLaneDown();
-            }
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                ShiftLaneUp();
+                transform.Translate(baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+
+                // Get input for lane changing
+                if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    ShiftLaneDown();
+                }
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    ShiftLaneUp();
+                }
             }
         }
 	}
+
+    void LateUpdate()
+    {
+        if(!eaten)
+        {
+            butterMeter.UpdatePercentage();
+        }
+    }
 
     void ShiftLaneUp() {
         Debug.Log("Lane Up");
@@ -89,6 +100,18 @@ public class Player : MonoBehaviour {
             {
                 butterMeter.AddButter(p);
                 Destroy(other.gameObject);
+            }
+        }
+
+        // Dog caught up to the player, Game Over!
+        else if (other.tag == "Dog")
+        {
+            Dog d = other.gameObject.GetComponent<Dog>();
+
+            if( d.currentState != DogState.EATING )
+            {
+                d.Stop();
+                eaten = true;
             }
         }
     }

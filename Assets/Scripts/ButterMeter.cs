@@ -11,8 +11,8 @@ public class ButterMeter : MonoBehaviour {
 	void Start () {
     }
 	
-	// Update is called once per frame
-	void LateUpdate () {
+	// Update is called if player isn't eaten
+	public void UpdatePercentage() {
         // Limit the percentage interval between 0 and 1
         percentage = Mathf.Max(0.0f, Mathf.Min(percentage, 1.0f));
 
