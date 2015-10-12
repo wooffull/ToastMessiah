@@ -23,18 +23,29 @@ public class StateManager : MonoBehaviour {
         switch (playState)
         {
             case GameplayState.START:
+                // Hide pause text
+                if (pauseText)
+                {
+                    pauseText.gameObject.SetActive(false);
+                }
                 break;
             case GameplayState.PLAYING:
-                // Hide pause text
-                pauseText.gameObject.SetActive(false);
+                if (pauseText)
+                {
+                    pauseText.gameObject.SetActive(false);
+                }
                 break;
             case GameplayState.PAUSE:
                 // Show pause text
-                pauseText.gameObject.SetActive(true);
+                if(pauseText) {
+                    pauseText.gameObject.SetActive(true);
+                }
                 break;
             case GameplayState.END:
                 // Activate end text, since it is de-active by default and isn't changed anywhere else
-                endText.gameObject.SetActive(true);
+                if (endText) {
+                    endText.gameObject.SetActive(true);
+                }
                 // Should probably add in a reset button at some point
                 break;
         }
