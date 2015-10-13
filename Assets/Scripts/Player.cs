@@ -101,7 +101,7 @@ public class Player : MonoBehaviour {
         // Obstacles and Butter behave the same way, except Obstacles add negative Butter
         if (other.tag == "Pickup")
         {
-            Pickup p = other.gameObject.GetComponent<Pickup>();
+            Pickup p = other.GetComponent<Pickup>();
 
             if (p.lane == currentLane)
             {
@@ -113,7 +113,7 @@ public class Player : MonoBehaviour {
         // Dog caught up to the player, Game Over!
         else if (other.tag == "Dog")
         {
-            Dog d = other.gameObject.GetComponent<Dog>();
+            Dog d = other.GetComponent<Dog>();
 
             if( d.currentState != DogState.EATING )
             {
@@ -121,6 +121,20 @@ public class Player : MonoBehaviour {
                 eaten = true;
                 stateManager.SetGameState(StateManager.GameplayState.END);
             }
+        }
+
+        // For tutorial: Ran into a notification marker
+        else if (other.tag == "NotificationMarker")
+        {
+            TextNotificationMarker t = other.GetComponent<TextNotificationMarker>();
+            t.text.SetActive(t.setActive);
+        }
+        
+        // For switching scenes upon touching a marker
+        else if (other.tag == "SceneSwitchMarker")
+        {
+            SceneSwitchMarker s = other.GetComponent<SceneSwitchMarker>();
+            s.LoadScene();
         }
     }
 }

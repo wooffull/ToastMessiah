@@ -11,11 +11,11 @@ public enum DogState
 
 public class Dog : MonoBehaviour {
     public const float FOLLOW_DISTANCE = 7;
-
-    private const float LUNGE_CHANCE = 0.005f;
+    
     private const int MAX_LUNGE_TIMER = 150;
     private const float FULLY_LUNGED_PERCENTAGE = 0.35f; // Percentage of time while in LUNGE state that the dog is fully lunged (at the player's x-coordinate)
 
+    public float lungeChance = 0.005f;
     public DogState currentState = DogState.CHASE;
     public Lane currentLane = Lane.MID;
 
@@ -54,7 +54,7 @@ public class Dog : MonoBehaviour {
             case DogState.CHASE:
                 currentLane = player.currentLane;
 
-                if (Random.value < LUNGE_CHANCE)
+                if (Random.value < lungeChance)
                 {
                     currentState = DogState.LUNGE;
                 }

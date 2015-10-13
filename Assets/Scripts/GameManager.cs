@@ -23,5 +23,10 @@ public class GameManager : MonoBehaviour
             if (stateManager.GetGameState() == StateManager.GameplayState.PLAYING) { stateManager.SetGameState(StateManager.GameplayState.PAUSE); }
             else if (stateManager.GetGameState() == StateManager.GameplayState.PAUSE) { stateManager.SetGameState(StateManager.GameplayState.PLAYING); }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Application.LoadLevel("Scene1");
+        }
     }
 }

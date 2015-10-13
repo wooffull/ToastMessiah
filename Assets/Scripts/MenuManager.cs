@@ -21,7 +21,7 @@ public class MenuManager : MonoBehaviour
         // Don't need to check if level should load, unless the currrent game state is Start
         if (stateManager.GetGameState() == StateManager.GameplayState.START && !startButton.activeInHierarchy)
         {
-            Application.LoadLevel("Scene1");
+            Application.LoadLevel("TutorialScene");
         }
         // Same deal as start button, but for checking if help text should be displayed
         else if (stateManager.GetGameState() == StateManager.GameplayState.START && !helpButton.activeInHierarchy)
