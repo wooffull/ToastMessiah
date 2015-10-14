@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TextNotificationMarker : MonoBehaviour {
-
+public class TextNotificationMarker : MonoBehaviour
+{
     public GameObject text;
     public bool setActive = true;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // When running into player, run code!
+        if (other.tag == "Player")
+        {
+            text.SetActive(setActive);
+        }
+    }
 }

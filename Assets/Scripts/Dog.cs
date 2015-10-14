@@ -14,8 +14,7 @@ public class Dog : MonoBehaviour {
     
     private const int MAX_LUNGE_TIMER = 150;
     private const float FULLY_LUNGED_PERCENTAGE = 0.35f; // Percentage of time while in LUNGE state that the dog is fully lunged (at the player's x-coordinate)
-
-    public float lungeChance = 0.005f;
+    
     public DogState currentState = DogState.CHASE;
     public Lane currentLane = Lane.MID;
 
@@ -53,11 +52,6 @@ public class Dog : MonoBehaviour {
         {
             case DogState.CHASE:
                 currentLane = player.currentLane;
-
-                if (Random.value < lungeChance)
-                {
-                    currentState = DogState.LUNGE;
-                }
                 break;
 
             case DogState.LUNGE:
@@ -105,8 +99,7 @@ public class Dog : MonoBehaviour {
                     }
 
                     float speedIncrease = FOLLOW_DISTANCE / ( FULLY_LUNGED_PERCENTAGE * MAX_LUNGE_TIMER );
-                    transform.Translate(1.0f * player.baseSpeed * Time.deltaTime + speedIncrease, 0.0f, 0.0f, Space.World);
-
+                    transform.Translate(player.baseSpeed * Time.deltaTime + speedIncrease, 0.0f, 0.0f, Space.World);
                     // Dog is past the player, so snap it to where the player's x-position is
                     if (transform.position.x > player.transform.position.x)
                     {
@@ -123,7 +116,7 @@ public class Dog : MonoBehaviour {
                 else if (lungePercentage > 1 - ( 1 - FULLY_LUNGED_PERCENTAGE ) * 0.5f )
                 {
                     float speedDecrease = FOLLOW_DISTANCE / (FULLY_LUNGED_PERCENTAGE * MAX_LUNGE_TIMER);
-                    transform.Translate(1.0f * player.baseSpeed * Time.deltaTime - speedDecrease, 0.0f, 0.0f, Space.World);
+                    transform.Translate(player.baseSpeed * Time.deltaTime - speedDecrease, 0.0f, 0.0f, Space.World);
 
                     // Dog is behind player and farther than it should be, so snap it to where it should be (FOLLOW_DISTANCE)
                     if (transform.position.x <= player.transform.position.x - FOLLOW_DISTANCE)

@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SceneSwitchMarker : MonoBehaviour
+public class DogActionMarker : MonoBehaviour
 {
-    public string scene;
+    public DogState dogState = DogState.LUNGE;
 
     void OnTriggerEnter2D(Collider2D other)
     {
         // When running into player, run code!
         if (other.tag == "Player")
         {
-            Application.LoadLevel(scene);
+            Dog dog = FindObjectOfType<Dog>();
+            dog.currentState = dogState;
         }
     }
 }

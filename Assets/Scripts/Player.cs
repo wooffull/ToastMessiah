@@ -122,19 +122,5 @@ public class Player : MonoBehaviour {
                 stateManager.SetGameState(StateManager.GameplayState.END);
             }
         }
-
-        // For tutorial: Ran into a notification marker
-        else if (other.tag == "NotificationMarker")
-        {
-            TextNotificationMarker t = other.GetComponent<TextNotificationMarker>();
-            t.text.SetActive(t.setActive);
-        }
-        
-        // For switching scenes upon touching a marker
-        else if (other.tag == "SceneSwitchMarker")
-        {
-            SceneSwitchMarker s = other.GetComponent<SceneSwitchMarker>();
-            s.LoadScene();
-        }
     }
 }
