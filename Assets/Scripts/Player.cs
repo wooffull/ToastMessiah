@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Player : MonoBehaviour {
     public float baseSpeed = 1;
     public Lane currentLane = Lane.MID;
-    public ButterMeter butterMeter;
+    //public ButterMeter butterMeter;
+    public Slider butterMeterSlider;
 
     private bool eaten;
+    private UIButterMeter butterMeter;
     private Transform playerTransform;
     private StateManager stateManager;
 
@@ -15,6 +18,7 @@ public class Player : MonoBehaviour {
         currentLane = Lane.MID;
         eaten = false;
         stateManager = GameObject.Find("GameController").GetComponent<StateManager>();
+        butterMeter = butterMeterSlider.GetComponent<UIButterMeter>();
     }
 	
 	// Update is called once per frame
