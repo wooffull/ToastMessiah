@@ -110,6 +110,14 @@ public class Player : MonoBehaviour {
             if (p.lane == currentLane)
             {
                 butterMeter.AddButter(p);
+
+                // Add to score if the pickup has a positive value
+                if (p.butterAmount > 0)
+                {
+                    ScoreTracker s = FindObjectOfType<ScoreTracker>();
+                    s.score += (int)(p.butterAmount * 1000);
+                }
+
                 Destroy(other.gameObject);
             }
         }
