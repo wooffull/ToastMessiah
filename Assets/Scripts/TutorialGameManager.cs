@@ -16,5 +16,9 @@ public class TutorialGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space) && stateManager.GetGameState() == StateManager.GameplayState.PAUSE)
+        {
+            stateManager.SetGameState(StateManager.GameplayState.PLAYING); 
+        }
     }
 }
