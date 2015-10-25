@@ -4,6 +4,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
     public float baseSpeed = 1;
+    public float actualSpeed;
     public Lane currentLane = Lane.MID;
     //public ButterMeter butterMeter;
     public Slider butterMeterSlider;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour {
         eaten = false;
         stateManager = GameObject.Find("GameController").GetComponent<StateManager>();
         butterMeter = butterMeterSlider.GetComponent<UIButterMeter>();
+        actualSpeed = baseSpeed;
     }
 	
 	// Update is called once per frame
@@ -28,11 +30,11 @@ public class Player : MonoBehaviour {
 
             if (butterPercentage > 0 && (stateManager.GetGameState() == StateManager.GameplayState.PLAYING))
             {
-               // float butterPercentage = butterMeter.percentage;
-
                 if (butterPercentage > 0)
                 {
-                    transform.Translate(baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+                    // Reduce speed based on how much butter is remaining
+                    actualSpeed = baseSpeed - (butterPercentage * 0.4f);
+                    transform.Translate(actualSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
 
                     // Get input for lane changing
                     if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
