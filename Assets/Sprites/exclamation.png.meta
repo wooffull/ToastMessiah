@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: c8aa6bed9a9be664094d6457db67523d
 timeCreated: 1445791802
+=======
+guid: 729ea713257857547bcd5d1432f31b70
+timeCreated: 1445607326
+>>>>>>> Added dog animations
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
