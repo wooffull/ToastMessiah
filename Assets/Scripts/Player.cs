@@ -37,11 +37,11 @@ public class Player : MonoBehaviour {
                     transform.Translate(actualSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
 
                     // Get input for lane changing
-                    if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                    if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         ShiftLaneDown();
                     }
-                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                    if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         ShiftLaneUp();
                     }

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Check for pause/ unpause
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (stateManager.GetGameState() == StateManager.GameplayState.PLAYING) { stateManager.SetGameState(StateManager.GameplayState.PAUSE); }
             else if (stateManager.GetGameState() == StateManager.GameplayState.PAUSE) { stateManager.SetGameState(StateManager.GameplayState.PLAYING); }
