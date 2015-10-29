@@ -16,8 +16,7 @@ public class WinMarker : MonoBehaviour
         if (other.tag == "Player")
         {
             // Change end text to display win message
-            stateManager.endText.GetComponent<Text>().text = "You Win!";
-            stateManager.endText.GetComponent<Text>().color = Color.green;
+            stateManager.winText.SetActive(true);
             stateManager.SetGameState(StateManager.GameplayState.END);
         }
     }

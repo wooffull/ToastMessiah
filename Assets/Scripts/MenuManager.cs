@@ -5,6 +5,7 @@ using System.Collections;
 public class MenuManager : MonoBehaviour
 {
     public GameObject startButton; // GameObject with start button
+    public GameObject startImage; // GameObject with start image
     public GameObject helpButton; // GameObject with help button
     public GameObject backButton; // GameObject with back button
 
@@ -27,6 +28,7 @@ public class MenuManager : MonoBehaviour
         else if (stateManager.GetGameState() == StateManager.GameplayState.START && !helpButton.activeInHierarchy)
         {
             startButton.SetActive(false);
+            startImage.SetActive(false);
             backButton.SetActive(true);
             stateManager.SetGameState(StateManager.GameplayState.PAUSE);
         }
@@ -35,6 +37,7 @@ public class MenuManager : MonoBehaviour
         {
             startButton.SetActive(true);
             helpButton.SetActive(true);
+            startImage.SetActive(true);
             stateManager.SetGameState(StateManager.GameplayState.START);
         }
 	}

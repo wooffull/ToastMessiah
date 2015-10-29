@@ -11,7 +11,8 @@ public class StateManager : MonoBehaviour {
     }
 
     public GameObject pauseText;
-    public GameObject endText;
+    public GameObject loseText;
+    public GameObject winText;
     public GameplayState playState = GameplayState.START;
 
     void Start()
@@ -42,9 +43,10 @@ public class StateManager : MonoBehaviour {
                 }
                 break;
             case GameplayState.END:
-                // Activate end text, since it is de-active by default and isn't changed anywhere else
-                if (endText) {
-                    endText.gameObject.SetActive(true);
+                // Game is over, so if win GO isn't active, then the player lost.
+                // If that's the case, activate the lose GO
+                if (!winText.activeInHierarchy) {
+                    loseText.gameObject.SetActive(true);
                 }
                 // Should probably add in a reset button at some point
                 break;
