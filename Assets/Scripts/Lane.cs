@@ -38,4 +38,39 @@ public static class LaneExtensions
             return 0;
         }
     }
+
+    // Gets the offset for each lane
+    public static Vector3 GetOffset(this Lane lane)
+    {
+        switch (lane)
+        {
+            case Lane.CLOSE:
+                return new Vector3
+                (
+                    -1.8f,
+                    0,
+                    0
+                );
+
+            case Lane.MID:
+                return new Vector3
+                (
+                    0,
+                    0,
+                    0
+                );
+                break;
+
+            case Lane.FAR:
+                return new Vector3
+                (
+                    1.75f,
+                    0,
+                    0
+                );
+                break;
+        }
+
+        return new Vector3();
+    }
 }

@@ -36,7 +36,7 @@ public class Dog : MonoBehaviour {
             player.transform.position.x - FOLLOW_DISTANCE,
             transform.position.y,
             transform.position.z
-        );
+        ) + currentLane.GetOffset();
 
         stateManager = GameObject.Find("GameController").GetComponent<StateManager>();
     }
@@ -53,6 +53,8 @@ public class Dog : MonoBehaviour {
 
     void UpdateState()
     {
+        Vector3 prevLaneOffset = currentLane.GetOffset();
+
         switch (currentState)
         {
             case DogState.CHASE:
@@ -79,18 +81,28 @@ public class Dog : MonoBehaviour {
                 }
                 break;
         }
+
+        transform.position = new Vector3
+        (
+            transform.position.x,
+            currentLane.GetY() + 0.1f,
+            transform.position.z
+        ) - prevLaneOffset + currentLane.GetOffset();
     }
 
     void Move()
     {
+        Vector3 prevLaneOffset = currentLane.GetOffset();
+
         switch (currentState)
         {
             case DogState.CHASE:
                 transform.Translate(player.baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+
                 transform.position = new Vector3
                 (
                     transform.position.x,
-                    currentLane.GetY(),
+                    currentLane.GetY() + 0.1f,
                     transform.position.z
                 );
                 break;
@@ -99,10 +111,11 @@ public class Dog : MonoBehaviour {
                 // Lunge when warning period is up, otherwise move as if chasing
                 if (delayTimer < LUNGE_DELAY) {
                     transform.Translate(player.baseSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+
                     transform.position = new Vector3
                     (
                         transform.position.x,
-                        currentLane.GetY(),
+                        currentLane.GetY() + 0.1f,
                         transform.position.z
                     );
                 }
@@ -127,11 +140,12 @@ public class Dog : MonoBehaviour {
                         transform.Translate(player.actualSpeed * Time.deltaTime + speedIncrease, 0.0f, 0.0f, Space.World);
                         // Dog is past the player, so snap it to where the player's x-position is
                         // This transition is jittery, looks not great, but idk how to avoid that...
-                        if (transform.position.x > player.transform.position.x)
+                        float maxX = player.transform.position.x - player.currentLane.GetOffset().x + currentLane.GetOffset().x;
+                        if (transform.position.x > maxX)
                         {
                             transform.position = new Vector3
                              (
-                                 player.transform.position.x,
+                                 maxX,
                                  transform.position.y,
                                  transform.position.z
                              );
@@ -145,11 +159,12 @@ public class Dog : MonoBehaviour {
                         transform.Translate(player.baseSpeed * Time.deltaTime - speedDecrease, 0.0f, 0.0f, Space.World);
 
                         // Dog is behind player and farther than it should be, so snap it to where it should be (FOLLOW_DISTANCE)
-                        if (transform.position.x <= player.transform.position.x - FOLLOW_DISTANCE)
+                        float minX = player.transform.position.x - player.currentLane.GetOffset().x + currentLane.GetOffset().x - FOLLOW_DISTANCE;
+                        if (transform.position.x <= minX)
                         {
                             transform.position = new Vector3
                             (
-                                player.transform.position.x - FOLLOW_DISTANCE,
+                                minX,
                                 transform.position.y,
                                 transform.position.z
                             );

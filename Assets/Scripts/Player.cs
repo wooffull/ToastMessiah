@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     public Lane currentLane = Lane.MID;
     //public ButterMeter butterMeter;
     public Slider butterMeterSlider;
+    public GameObject referenceLine;
 
     private bool eaten;
     private UIButterMeter butterMeter;
@@ -54,12 +55,21 @@ public class Player : MonoBehaviour {
     {
         if(!eaten)
         {
+            referenceLine.transform.position = new Vector3
+            (
+                3 + transform.position.x - currentLane.GetOffset().x,
+                referenceLine.transform.position.y,
+                referenceLine.transform.position.z
+            );
             butterMeter.UpdatePercentage();
         }
     }
 
     void ShiftLaneUp() {
         Debug.Log("Lane Up");
+
+        Vector3 prevLaneOffset = currentLane.GetOffset();
+
         switch (currentLane)
         {
             case Lane.CLOSE:
@@ -75,13 +85,16 @@ public class Player : MonoBehaviour {
         transform.position = new Vector3
         (
             transform.position.x,
-            currentLane.GetY(),
+            currentLane.GetY() + 0.1f,
             transform.position.z
-        );
+        ) - prevLaneOffset + currentLane.GetOffset();
     }
 
     void ShiftLaneDown() {
         Debug.Log("Lane Down");
+
+        Vector3 prevLaneOffset = currentLane.GetOffset();
+
         switch (currentLane)
         {
             case Lane.CLOSE:
@@ -97,9 +110,9 @@ public class Player : MonoBehaviour {
         transform.position = new Vector3
         (
             transform.position.x,
-            currentLane.GetY(),
+            currentLane.GetY() + 0.1f,
             transform.position.z
-        );
+        ) - prevLaneOffset + currentLane.GetOffset();
     }
 
     void OnTriggerEnter2D(Collider2D other)
